@@ -12,7 +12,12 @@ namespace Cr7Sund.AssetLoader
             //  1. There will beonly one resources loader
             //  2. If we want to support different load type, for example, different asset loader object supoort differnt load type
             // Pay attention to the object pool
+
+#if ADDRESSABLES_1_17_4_OR_NEWER
+            AssetLoader = new AddressableAssetLoader();
+#else
             AssetLoader = new ResourcesAssetLoader();
+#endif
 
         }
 

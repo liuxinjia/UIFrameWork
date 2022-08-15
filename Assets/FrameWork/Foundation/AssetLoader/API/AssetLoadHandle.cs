@@ -23,6 +23,7 @@ namespace Cr7Sund.AssetLoader
         float Complete();
     }
 
+    // UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle Simplified and Class version
     public sealed class AssetLoadHandle<T> : IAssetLoadHandle, IAssetLoadHandleSetter<T> where T : Object
     {
         private Func<float> CompleteFunc;
