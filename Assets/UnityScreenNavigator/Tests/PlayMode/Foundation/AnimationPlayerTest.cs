@@ -3,6 +3,8 @@ using UnityScreenNavigator.Runtime.Foundation.Animation;
 
 namespace UnityScreenNavigator.Tests.PlayMode.Foundation
 {
+
+    
     public class AnimationPlayerTest
     {
         [Test]
