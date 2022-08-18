@@ -16,7 +16,12 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 8b8c228fcce360540adebb07a65052c8
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: beb4a389046d44a5c95e59554865f763
+    m_Address: timeline_demo_page_shop_push_enter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 321afa2ed789e1c44949b9deb11043d9, type: 2}
   m_SchemaSet:
