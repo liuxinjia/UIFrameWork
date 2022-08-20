@@ -85,7 +85,6 @@ namespace Cr7Sund.UIFrameWork
 
             _canvasGroup.alpha = 0.0f;
 
-            OnShow();
             return CoroutineManager.Instance.Run(CreateCoroutine(OnShowAsync()));
         }
 
@@ -102,21 +101,20 @@ namespace Cr7Sund.UIFrameWork
 
         public AsyncProcessHandle BeforeRelease()
         {
-            return CoroutineManager.Instance.Run(CreateCoroutine(OnRelease()));
+            return CoroutineManager.Instance.Run(CreateCoroutine(OnDestory()));
         }
 
 
-        private IEnumerator ExitRoutine(bool push, bool playAnimation, UINode exitPage)
+        private IEnumerator ExitRoutine(bool push, bool playAnimation, UINode enterPage)
         {
-            var pageController = exitPage.pageController;
             if (playAnimation)
             {
                 var anim = _animationContainer.GetAnimation(push, false);
                 if (anim == null)
                     anim = UIManager.Instance.CustomUISettings.GetDefaultPageTransitionAnimation(push, false);
 
-                anim.SetPartner(pageController.pageView.transform as RectTransform);
-                anim.Setup(pageController._rectTransform);
+                anim.SetPartner(pageView.transform as RectTransform);
+                anim.Setup(_rectTransform);
 
                 yield return CoroutineManager.Instance.Run(
                     anim.CreatePlayRoutine(TransitionProgressReporter)
@@ -124,14 +122,14 @@ namespace Cr7Sund.UIFrameWork
             }
 
             _canvasGroup.alpha = 0.0f;
+            OnHide();
+            yield break;
         }
 
 
-        private IEnumerator EnterRoutine(bool push, bool playAnimation, UINode enterPage)
+        private IEnumerator EnterRoutine(bool push, bool playAnimation, UINode exitPage)
         {
-            var pageController = enterPage.pageController;
-
-            pageController._canvasGroup.alpha = 1.0f;
+            _canvasGroup.alpha = 1.0f;
 
             if (playAnimation)
             {
@@ -139,8 +137,8 @@ namespace Cr7Sund.UIFrameWork
                 if (anim == null)
                     anim = UIManager.Instance.CustomUISettings.GetDefaultPageTransitionAnimation(push, true);
 
-                anim.SetPartner(pageController.pageView.transform as RectTransform);
-                anim.Setup(pageController._rectTransform);
+                anim.SetPartner(pageView.transform as RectTransform);
+                anim.Setup(_rectTransform);
 
                 yield return CoroutineManager.Instance.Run(
                      anim.CreatePlayRoutine(TransitionProgressReporter)
@@ -148,6 +146,8 @@ namespace Cr7Sund.UIFrameWork
             }
 
             _rectTransform.FillParent(_parentTransform);
+            OnShow();
+            yield break;
         }
 
         #endregion
@@ -157,7 +157,7 @@ namespace Cr7Sund.UIFrameWork
         public virtual void OnShow() { }
         public virtual void OnHide() { }
 
-        public virtual IEnumerator OnRelease() { yield break; }
+        public virtual IEnumerator OnDestory() { yield break; }
 
         #endregion
 

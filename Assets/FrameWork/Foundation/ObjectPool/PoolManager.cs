@@ -6,7 +6,7 @@ namespace Cr7Sund.Pool
     using Cr7Sund.Runtime.Util;
     using System.Collections.Generic;
 
-    public class PoolManager : Singleton<PoolManager>
+    public class PoolManager : MonoBehaviourSingleton<PoolManager>
     {
         private readonly Dictionary<Type, object> _pools = new Dictionary<Type, object>();
 

@@ -3,14 +3,15 @@ namespace Cr7Sund.Settings
     using Cr7Sund.Animation.UI;
     using UnityEngine;
 
+    [CreateAssetMenu(menuName = "Cr7SundFrameWork/UI/UISettings")]
     public class UISettings : ScriptableObject
     {
-        public const string path = "";
+        public const string resourcesKey = "CustomUISettings";
 
-        [SerializeField] private  TransitionAnimationObject PagePushEnterAnimation;
-        [SerializeField] private  TransitionAnimationObject PagePushExitAnimation;
-        [SerializeField] private  TransitionAnimationObject PagePopEnterAnimation;
-        [SerializeField] private  TransitionAnimationObject PagePopExitAnimation;
+        [SerializeField] private TransitionAnimationObject PagePushEnterAnimation;
+        [SerializeField] private TransitionAnimationObject PagePushExitAnimation;
+        [SerializeField] private TransitionAnimationObject PagePopEnterAnimation;
+        [SerializeField] private TransitionAnimationObject PagePopExitAnimation;
 
 
         public ITransitionAnimation GetDefaultPageTransitionAnimation(bool push, bool enter)
@@ -18,7 +19,8 @@ namespace Cr7Sund.Settings
             ? (enter ? PagePushEnterAnimation : PagePushExitAnimation)
             : (enter ? PagePopEnterAnimation : PagePopExitAnimation);
 
-        public void InitDefaultSettings(){
+        public void InitDefaultSettings()
+        {
 
         }
 #if UNITY_EDITOR

@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - tutorial
+  - UITransitionActions
+  - StaticBatchExclusive
   layers:
   - Default
   - TransparentFX
@@ -40,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Popup
+    uniqueID: 1215266987
+    locked: 0
+  - name: HUD
+    uniqueID: 2366468247
     locked: 0

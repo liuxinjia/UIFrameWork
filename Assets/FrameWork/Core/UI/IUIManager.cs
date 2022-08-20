@@ -8,7 +8,7 @@ namespace Cr7Sund.UIFrameWork
 
         AsyncProcessHandle Back(bool playAnimation = true);
 
-        AsyncProcessHandle Close(UINode enterPage);
+
         AsyncProcessHandle Preload(UINode preloadPage);
 
         void ReleasePreloaded(UINode preloadPage);

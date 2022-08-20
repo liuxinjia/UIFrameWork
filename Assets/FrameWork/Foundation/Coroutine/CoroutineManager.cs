@@ -4,26 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Cr7Sund.Pool;
+using Cr7Sund.Runtime.Util;
 
 namespace Cr7Sund.MyCoroutine
 {
-    public class CoroutineManager : MonoBehaviour
+    public class CoroutineManager : MonoBehaviourSingleton<CoroutineManager>
     {
-        private static CoroutineManager _instance;
-
-        public static CoroutineManager Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    var go = new GameObject($"{nameof(CoroutineManager)}");
-                    DontDestroyOnLoad(go);
-                    _instance = go.AddComponent<CoroutineManager>();
-                }
-                return _instance;
-            }
-        }
 
         internal AsyncProcessHandle Run(Coroutine coroutine)
         {
@@ -81,7 +67,8 @@ namespace Cr7Sund.MyCoroutine
                     OnTerminate(id);
                     if (throwException)
                     {
-                        throw;
+                        
+                        throw new System.Exception(ex + ", " + ex.StackTrace);
                     }
                 }
 

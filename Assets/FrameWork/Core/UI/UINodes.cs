@@ -9,6 +9,12 @@ namespace Cr7Sund.UIFrameWork
         // public static readonly UINode AnnouncementPanel = new UINode("announcementpanel", null);
     }
 
+    public enum UIType{
+        Default,
+        Popup,
+        HUD
+    }
+
     // UI Page Node
     public  class UINode
     {

@@ -15,7 +15,9 @@ public class DemoPageController : UIPageController
 
     public override void OnHide()
     {
-        VM.button.onClick.RemoveAllListeners();
+        //MARK  GetAllCompoonent to remove 
+        // Maybe there exist listeners  collection
+        VM.button.onClick.RemoveAllListeners(); 
     }
 
     // public override IEnumerator OnShowAsync()
@@ -24,7 +26,7 @@ public class DemoPageController : UIPageController
     // }
 
 
-    public override IEnumerator OnRelease()
+    public override IEnumerator OnDestory()
     {
         yield break;
     }

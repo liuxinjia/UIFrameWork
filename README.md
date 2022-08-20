@@ -20,6 +20,8 @@
      * 多语言文本
      * 聊天系统
      * HUD
-     * UI特效 粒子系统
+     * UI特效 粒子系统 https://github.com/mob-sakai/ParticleEffectForUGUI ,https://stackoverflow.com/questions/58830542/unity-particle-effects-on-canvas
      * UISpine 支持
 
+11.TODO 渲染顺序支持
+     * Page 下 不同UI Object 支持

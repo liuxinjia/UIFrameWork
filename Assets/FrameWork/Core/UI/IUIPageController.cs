@@ -10,7 +10,8 @@ namespace Cr7Sund.UIFrameWork
 
         void OnHide();
 
-        IEnumerator OnRelease();
+
+        IEnumerator OnDestory();
 
     }
 }

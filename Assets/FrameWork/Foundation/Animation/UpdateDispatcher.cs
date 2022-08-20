@@ -6,7 +6,7 @@ namespace Cr7Sund.Animation
 
     public delegate float CalcDeltaTime(float deltaTime);
 
-    public class UpdateDispatcher : Singleton<UpdateDispatcher>
+    public class UpdateDispatcher : MonoBehaviourSingleton<UpdateDispatcher>
     {
         private readonly Dictionary<IUpdatable, CalcDeltaTime> _targets =
         new Dictionary<IUpdatable, CalcDeltaTime>();

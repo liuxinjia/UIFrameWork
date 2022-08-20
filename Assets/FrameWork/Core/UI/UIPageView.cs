@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace Cr7Sund.UIFrameWork
 {
+    [DisallowMultipleComponent]
+    [RequireComponent(typeof(CanvasGroup))]
     public abstract class UIPageView : MonoBehaviour
     {
         // public Button btn;
@@ -13,6 +15,7 @@ namespace Cr7Sund.UIFrameWork
         public abstract UIPageController Bind();
 
         [SerializeField] public int renderingOrder;
+        [SerializeField] public UIType uiType;
         public PageTransitionAnimationContainer transitionAniamtionController;
     }
 }
