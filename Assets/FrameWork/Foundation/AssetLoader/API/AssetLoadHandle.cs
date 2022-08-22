@@ -1,3 +1,4 @@
+using Cr7Sund.Pool;
 using System;
 using UnityEngine;
 
@@ -56,8 +57,9 @@ namespace Cr7Sund.AssetLoader
         {
             Result = null;
             CompleteFunc = null;
-            throw new NotImplementedException();
+            Status = AssetLoadStatus.None;
         }
+
 
         #region  Properties
         public T Result { get; private set; }

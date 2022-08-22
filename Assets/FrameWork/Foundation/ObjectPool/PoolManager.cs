@@ -43,6 +43,7 @@ namespace Cr7Sund.Pool
                 throw new Exception($"No pool item  has been push, Make sure you have the same type with Get, {typeof(T)}");
             }
             if (cachePool is ObjectPool<T> pool) pool.Release(element);
+            if (element is IDisposable poolElement) poolElement.Dispose();
         }
     }
 }
