@@ -1,6 +1,6 @@
 namespace Cr7Sund.Settings
 {
-    using Cr7Sund.Animation.UI;
+    using Cr7Sund.Transition.UI;
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "Cr7SundFrameWork/UI/UISettings")]
@@ -8,16 +8,12 @@ namespace Cr7Sund.Settings
     {
         public const string resourcesKey = "CustomUISettings";
 
-        [SerializeField] private TransitionAnimationObject PagePushEnterAnimation;
-        [SerializeField] private TransitionAnimationObject PagePushExitAnimation;
-        [SerializeField] private TransitionAnimationObject PagePopEnterAnimation;
-        [SerializeField] private TransitionAnimationObject PagePopExitAnimation;
+        [SerializeField] private TransitionObject PageEnterAnimation;
+        [SerializeField] private TransitionObject PageExitAnimation;
 
 
         public ITransitionAnimation GetDefaultPageTransitionAnimation(bool push, bool enter)
-        => push
-            ? (enter ? PagePushEnterAnimation : PagePushExitAnimation)
-            : (enter ? PagePopEnterAnimation : PagePopExitAnimation);
+        =>  (enter ? PageEnterAnimation : PageExitAnimation);
 
         public void InitDefaultSettings()
         {

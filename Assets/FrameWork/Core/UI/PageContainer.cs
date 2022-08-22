@@ -68,7 +68,7 @@ namespace Cr7Sund.UIFrameWork
 
             if (exitPage != null && exitPage.Level == enterPage.Level)
             {
-                throw new Exception($"May show the current page");
+                throw new Exception($"Maybe show the current page {exitPage.resourceKey}");
             }
 
             //Jump back to top layers if open tree layers >=2
@@ -143,15 +143,14 @@ namespace Cr7Sund.UIFrameWork
             // Unload Unused Page
             if (exitPage != null && !exitPage.keepInStack)// no while, since we check neighbors
             {
-                yield return exitPage.pageController.BeforeRelease();
                 var hashKey = exitPage.resourceKey;
                 var handle = _assetLoadHandles[hashKey];
-
+                
+                exitPage.Dispose();
                 _assetLoadHandles.Remove(hashKey);
                 AssetLoader.Release<GameObject>(handle);
 
                 enterPage.prevKey = exitPage.prevKey;
-                exitPage.Destroy();
             }
 
             CurPage = enterPage;
@@ -164,7 +163,6 @@ namespace Cr7Sund.UIFrameWork
 
             //PLAN replace with Assert
             Assert.IsNotNull(exitPage, "Cannot transition because there are no pages loaded on the stack.");
-            Assert.IsNotNull(exitPage.prevKey, "Cannot pop because it is the only left page.");
 
             if (IsInTransition)
             {
@@ -175,14 +173,15 @@ namespace Cr7Sund.UIFrameWork
             IsInTransition = true;
 
             var enterPage = exitPage.prevKey;
-            var enterPageCtrl = enterPage.pageController;
+            var enterPageCtrl = enterPage?.pageController;
+
             var exitPageCtrl = exitPage?.pageController;
 
 
             // Play Animations
             /// --------------------- ---------------------
             yield return exitPageCtrl.Exit(true, playAnimation, exitPage);
-            yield return enterPageCtrl.Enter(true, playAnimation, exitPage);
+            if (enterPage != null) yield return enterPageCtrl.Enter(true, playAnimation, exitPage);
 
             //End Transition
             IsInTransition = false;
@@ -190,19 +189,24 @@ namespace Cr7Sund.UIFrameWork
 
             // Unload Unused Page
 
-            yield return exitPageCtrl.BeforeRelease();
             var exitPagekey = exitPage.resourceKey;
             var handle = _assetLoadHandles[exitPagekey];
 
             _assetLoadHandles.Remove(exitPagekey);
+            exitPage.Dispose();
             AssetLoader.Release<GameObject>(handle);
-
-
-            exitPage.Destroy();
 
             CurPage = enterPage;
         }
 
+        public IEnumerator CloseAllRoutine()
+        {
+            while (CurPage != null)
+            {
+                yield return PopRoutine(false);
+            }
+            yield break;
+        }
 
         #region  Public Methods
 
@@ -242,19 +246,15 @@ namespace Cr7Sund.UIFrameWork
 
             var handle = _assetLoadHandles[preloadPageKey];
             _assetLoadHandles.Remove(preloadPageKey);
-            AssetLoader.Release<GameObject>(handle);
+            AssetLoader.Release<GameObject>(handle);// include handle return to pool
         }
 
-        public void CloseAll()
+
+
+        public AsyncProcessHandle CloseAll(Action<AsyncProcessHandle> onTerminate = null)
         {
-            while (CurPage != null)
-            {
-                CurPage = CurPage.prevKey;
-                CoroutineManager.Instance.Run(PopRoutine(false));
-            }
+            return CoroutineManager.Instance.Run(CloseAllRoutine(), onTerminate );
         }
-
-
 
         #endregion
     }

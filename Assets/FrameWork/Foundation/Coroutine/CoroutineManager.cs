@@ -11,36 +11,41 @@ namespace Cr7Sund.MyCoroutine
     public class CoroutineManager : MonoBehaviourSingleton<CoroutineManager>
     {
 
-        internal AsyncProcessHandle Run(Coroutine coroutine)
-        {
-            throw new NotImplementedException();
-        }
-
         private int _currentId;
         private readonly Dictionary<int, Coroutine> _runningCoroutines =
             new Dictionary<int, Coroutine>();
-        private readonly IObjectPool<AsyncProcessHandle> _pool = new ObjectPool<AsyncProcessHandle>(() => new AsyncProcessHandle());
-
+        private readonly IObjectPool<AsyncProcessHandle> _pool =
+            new ObjectPool<AsyncProcessHandle>(() => new AsyncProcessHandle());// Since AsyncProcessHandle only appear here
         public bool ThrowException { get; set; } = true;
 
 
-        public AsyncProcessHandle Run(IEnumerator routine)
+        public AsyncProcessHandle Run(IEnumerator routine, Action<AsyncProcessHandle> onTerminate = null)
         {
             Assert.IsNotNull<IEnumerator>(routine);
 
             var id = _currentId++;
             var handle = _pool.Get();
             var handleSetter = (IAsyncProcessHandleSetter)handle;
-
+            handle.Init();
             handle.Id = id;
+            if (onTerminate != null)
+            {
+                handle.OnTerminate += () => onTerminate(handle);
+            }
 
-            var coroutine = StartCoroutine(ProcessRoutines(routine, handleSetter, id));
+            var coroutine = StartCoroutine(ProcessRoutines(routine, id, handleSetter));
             _runningCoroutines.Add(id, coroutine);
             return handle;
         }
+        public void Stop(AsyncProcessHandle handle)
+        {
+            var coroutine = _runningCoroutines[handle.Id];
+            StopCoroutine(coroutine);
+            OnTerminate(handle);
+        }
 
 
-        private IEnumerator ProcessRoutines(IEnumerator routine, IAsyncProcessHandleSetter handleSetter, int id, bool throwException = true)
+        private IEnumerator ProcessRoutines(IEnumerator routine, int id, IAsyncProcessHandleSetter handleSetter, bool throwException = true)
         {
             object current = null;
             while (true)// Avoid first routine.MoveNext Exception
@@ -64,10 +69,10 @@ namespace Cr7Sund.MyCoroutine
                 {
                     ex = e;
                     OnError(ex, handleSetter);
-                    OnTerminate(id);
+                    OnTerminate(handleSetter);
                     if (throwException)
                     {
-                        
+
                         throw new System.Exception(ex + ", " + ex.StackTrace);
                     }
                 }
@@ -82,28 +87,30 @@ namespace Cr7Sund.MyCoroutine
             }
 
             OnComplete(current, handleSetter);
-            OnTerminate(id);
+            OnTerminate(handleSetter);
         }
 
 
         private void OnComplete(object result, IAsyncProcessHandleSetter handleSetter)
         {
             handleSetter.Complete(result);
-            _pool.Release(handleSetter as AsyncProcessHandle);
         }
 
         private void OnError(Exception ex, IAsyncProcessHandleSetter handleSetter)
         {
             handleSetter.Error(ex);
-            _pool.Release(handleSetter as AsyncProcessHandle);
         }
 
-        private void OnTerminate(int id)
+        private void OnTerminate(IAsyncProcessHandleSetter handleSetter)
         {
-            _runningCoroutines.Remove(id);
+            if (handleSetter is AsyncProcessHandle handle)
+            {
+                _runningCoroutines.Remove(handle.Id);
+                handle.Releasae();
+                _pool.Release(handle);
+            }
         }
 
 
     }
 }
-

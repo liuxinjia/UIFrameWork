@@ -28,6 +28,8 @@ namespace Cr7Sund.AssetLoader
             handle.ControlId = controlId;
 
             var addressableHandle = Addressables.LoadAssetAsync<T>(key);
+            _addressableHanlders.Add(handle.ControlId, addressableHandle);
+            
             addressableHandle.WaitForCompletion();
 
             setter.SetPercentCompleteFunc(() => addressableHandle.PercentComplete);
@@ -45,6 +47,7 @@ namespace Cr7Sund.AssetLoader
             handle.ControlId = controlId;
 
             var addressableHandle = Addressables.LoadAssetAsync<T>(key);
+            _addressableHanlders.Add(handle.ControlId, addressableHandle);
             addressableHandle.Completed += x =>
             {
                 setter.SetLoadResult<T>(key, x.Result);

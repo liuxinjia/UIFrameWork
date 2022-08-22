@@ -8,10 +8,10 @@ public class UIEnterence : MonoBehaviour
         // var assetLoader = new ResourcesAssetLoader();
         // var assetLoader = new AddressableAssetLoader();
 
-        UIManager.Instance.Show(UINodes.DemoPage);
-        UIManager.Instance.Back();
+        // UIManager.Instance.Show(UINodes.DemoPage);
+        // UIManager.Instance.Back();
 
-        UIManager.Instance.Preload(UINodes.DemoPage);
-        UIManager.Instance.ReleasePreloaded(UINodes.DemoPage);
+        // UIManager.Instance.Preload(UINodes.DemoPage);
+        // UIManager.Instance.ReleasePreloaded(UINodes.DemoPage);
     }
 }

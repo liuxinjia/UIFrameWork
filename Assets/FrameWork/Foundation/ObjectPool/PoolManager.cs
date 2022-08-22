@@ -35,7 +35,7 @@ namespace Cr7Sund.Pool
 
         }
 
-        public void Release<T>(T element) where T : class
+        public void Release<T>(T element) where T : class, new()
         {
             if (!_pools.TryGetValue(typeof(T), out var cachePool))
             {

@@ -20,7 +20,7 @@ namespace Cr7Sund.UIFrameWork
             }
 
         }
-        
+
         private UISettings _uiSettings;
 
         private PageContainer _pageContainers;
@@ -95,10 +95,19 @@ namespace Cr7Sund.UIFrameWork
 
 
 
-        public AsyncProcessHandle Show(UINode enterPage, bool playAnimation = true, bool keepInStack = true, bool loadAsync = true)
+        public AsyncProcessHandle Show(UINode enterPage, bool playAnimation = true, bool keepInStack = true, bool loadAsync = true, bool closeAllPopup = false)
         {
-            _popupContainers.CloseAll();
-            return _pageContainers.Show(enterPage, playAnimation, keepInStack, loadAsync);
+            if (closeAllPopup)
+            {
+                return _popupContainers.CloseAll((handle) =>
+                        {
+                            if (!handle.HasError) _pageContainers.Show(enterPage, playAnimation, keepInStack, loadAsync);
+                        });
+            }
+            else
+            {
+                return _pageContainers.Show(enterPage, playAnimation, keepInStack, loadAsync);
+            }
         }
 
         #endregion

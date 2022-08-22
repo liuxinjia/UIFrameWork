@@ -1,5 +1,5 @@
 using System.Collections;
-using Cr7Sund.Animation.UI;
+using Cr7Sund.Transition.UI;
 using Cr7Sund.MyCoroutine;
 using UnityEngine;
 
@@ -16,6 +16,6 @@ namespace Cr7Sund.UIFrameWork
 
         [SerializeField] public int renderingOrder;
         [SerializeField] public UIType uiType;
-        public PageTransitionAnimationContainer transitionAniamtionController;
+        public PageTransitionContainer transitionController;
     }
 }

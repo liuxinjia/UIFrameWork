@@ -6,12 +6,13 @@ using Cr7Sund.Runtime.Util;
 
 namespace Cr7Sund.UIFrameWork
 {
-    using Cr7Sund.Animation.UI;
+    using Cr7Sund.Pool;
+    using Cr7Sund.Transition.UI;
 
     public abstract class UIPageController : IUIPageController
     {
 
-        #region  Properties
+        #region Properties
 
         // public DemoUIPageView VM =>(DemoUIPageView)pageView;
         public UIPageView pageView;
@@ -23,7 +24,7 @@ namespace Cr7Sund.UIFrameWork
         private GameObject _gameObject => pageView.gameObject;
 
         public bool IsTransitioning { get => TransitionAnimationProgress > 0f; }
-        private PageTransitionAnimationContainer _animationContainer => pageView.transitionAniamtionController;
+        private PageTransitionContainer _animationContainer => pageView.transitionController;
 
         #region Animation
 
@@ -47,7 +48,7 @@ namespace Cr7Sund.UIFrameWork
             get
             {
                 if (_transitionProgressReporter == null)
-                    _transitionProgressReporter = new Progress<float>(SetTransitionProgress);
+                    _transitionProgressReporter = PoolManager.Instance.Get<Progress<float>>();
                 return _transitionProgressReporter;
             }
         }
@@ -56,6 +57,7 @@ namespace Cr7Sund.UIFrameWork
             TransitionAnimationProgress = progress;
             TransitionAnimationProgressChanged?.Invoke(progress);
         }
+
         #endregion
 
         #endregion
@@ -99,9 +101,23 @@ namespace Cr7Sund.UIFrameWork
             return CoroutineManager.Instance.Run(EnterRoutine(push, playAnimation, exitPage));
         }
 
-        public AsyncProcessHandle BeforeRelease()
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <returns></returns>
+        public void Dispose()
         {
-            return CoroutineManager.Instance.Run(CreateCoroutine(OnDestory()));
+            OnDestory();
+
+            if (_transitionProgressReporter != null)
+            {
+                PoolManager.Instance.Release<Progress<float>>(_transitionProgressReporter);
+                _transitionProgressReporter = null;
+            }
+            pageView = null;
+            _rectTransform = null;
+            _parentTransform = null;
+            _canvasGroup = null;
         }
 
 
@@ -113,12 +129,16 @@ namespace Cr7Sund.UIFrameWork
                 if (anim == null)
                     anim = UIManager.Instance.CustomUISettings.GetDefaultPageTransitionAnimation(push, false);
 
-                anim.SetPartner(pageView.transform as RectTransform);
-                anim.Setup(_rectTransform);
+                if (anim != null)
+                {
+                    anim.SetPartner(pageView.transform as RectTransform);
+                    anim.Setup(_rectTransform);
 
-                yield return CoroutineManager.Instance.Run(
-                    anim.CreatePlayRoutine(TransitionProgressReporter)
-                   );
+                    yield return CoroutineManager.Instance.Run(
+                        anim.CreatePlayRoutine(TransitionProgressReporter, false)
+                       );
+                }
+
             }
 
             _canvasGroup.alpha = 0.0f;
@@ -130,19 +150,21 @@ namespace Cr7Sund.UIFrameWork
         private IEnumerator EnterRoutine(bool push, bool playAnimation, UINode exitPage)
         {
             _canvasGroup.alpha = 1.0f;
-
             if (playAnimation)
             {
                 var anim = _animationContainer.GetAnimation(push, true);
                 if (anim == null)
                     anim = UIManager.Instance.CustomUISettings.GetDefaultPageTransitionAnimation(push, true);
 
-                anim.SetPartner(pageView.transform as RectTransform);
-                anim.Setup(_rectTransform);
+                if (anim != null)
+                {
+                    anim.SetPartner(pageView.transform as RectTransform);
+                    anim.Setup(_rectTransform);
 
-                yield return CoroutineManager.Instance.Run(
-                     anim.CreatePlayRoutine(TransitionProgressReporter)
-                   );
+                    yield return CoroutineManager.Instance.Run(
+                         anim.CreatePlayRoutine(TransitionProgressReporter, true)
+                       );
+                }
             }
 
             _rectTransform.FillParent(_parentTransform);
@@ -152,22 +174,25 @@ namespace Cr7Sund.UIFrameWork
 
         #endregion
 
-        #region  OverideMethods
-        public virtual IEnumerator OnShowAsync() { yield break; }
+        #region OverideMethods
+        public virtual IEnumerator OnShowAsync()
+        {
+
+            yield break;
+        }
         public virtual void OnShow() { }
         public virtual void OnHide() { }
 
-        public virtual IEnumerator OnDestory() { yield break; }
+        public virtual void OnDestory() { }
+
+
 
         #endregion
 
         //1. Support Task
         private IEnumerator CreateCoroutine(IEnumerator target) => target;
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 
 

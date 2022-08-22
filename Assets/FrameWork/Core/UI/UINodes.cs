@@ -9,14 +9,15 @@ namespace Cr7Sund.UIFrameWork
         // public static readonly UINode AnnouncementPanel = new UINode("announcementpanel", null);
     }
 
-    public enum UIType{
+    public enum UIType
+    {
         Default,
         Popup,
         HUD
     }
 
     // UI Page Node
-    public  class UINode
+    public class UINode
     {
         public readonly string resourceKey; //replace with ushort
 
@@ -32,7 +33,10 @@ namespace Cr7Sund.UIFrameWork
             resourceKey = key;
         }
 
-        public void Destroy()
+        /// <summary>
+        /// Include PageView and PageContainer dispose
+        /// </summary>
+        public void Dispose()
         {
             Level = 0;
             prevKey = null;

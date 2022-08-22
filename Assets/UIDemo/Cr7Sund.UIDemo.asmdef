@@ -1,0 +1,16 @@
+{
+    "name": "Cr7Sund.UIDemo",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a1b9907fe84d9c14cb529afe08d87e5e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

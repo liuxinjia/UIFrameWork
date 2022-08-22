@@ -16,42 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 174cd9ee8c46e644393f1add2f82165c
-  m_SerializeEntries:
-  - m_GUID: 500da42f59d15ea46a0ef80d7e6e007b
-    m_Address: Assets/UIDemo/PreResources/Prefabs/Settings_Popup/MainMenu_VideoSetting_Popup.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 17abfc048ffe6054a882150b85f49c9a
-    m_Address: Assets/UIDemo/PreResources/Prefabs/Settings_Popup/MainMenu_AudioSetting_Popup.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 70eee29052620bf4eb4463e75ebcc705
-    m_Address: Assets/UIDemo/PreResources/Prefabs/Settings_Popup/MainMenu_Setting_Popup.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e78a78c4db3fb614d99742a34b4e7153
-    m_Address: Assets/UIDemo/PreResources/Prefabs/Settings_Popup/MainMenu_Window_Popup.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 36a2c79ee4fd64849a035d43622a9626
-    m_Address: Assets/UIDemo/PreResources/Prefabs/Settings_Popup/MainMenu_GamePlaySetting_Popup.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5f100c7ce22c4e948bfd0a94045d8b9f
-    m_Address: Assets/UIDemo/PreResources/Prefabs/MainMenuPage.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4ad34963d9d50d449b5c99887f3f11b2
-    m_Address: Assets/UIDemo/PreResources/Prefabs/LoadingPage.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 321afa2ed789e1c44949b9deb11043d9, type: 2}
   m_SchemaSet:

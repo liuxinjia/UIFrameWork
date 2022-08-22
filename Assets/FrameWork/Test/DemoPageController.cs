@@ -26,8 +26,4 @@ public class DemoPageController : UIPageController
     // }
 
 
-    public override IEnumerator OnDestory()
-    {
-        yield break;
-    }
 }

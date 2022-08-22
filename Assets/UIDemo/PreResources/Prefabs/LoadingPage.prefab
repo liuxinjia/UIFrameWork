@@ -277,8 +277,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   renderingOrder: 0
   uiType: 0
-  transitionAniamtionController:
-    PagePushEnterAnimation: {fileID: 0}
-    PagePushExitAnimation: {fileID: 0}
-    PagePopEnterAnimation: {fileID: 0}
-    PagePopExitAnimation: {fileID: 0}
+  transitionController:
+    PagePushEnterTransition:
+      _assetType: 0
+      _animationBehaviour: {fileID: 0}
+      _animationObject: {fileID: 0}
+    PagePushExitTransition:
+      _assetType: 0
+      _animationBehaviour: {fileID: 0}
+      _animationObject: {fileID: 0}
+    PagePopEnterTransition:
+      _assetType: 0
+      _animationBehaviour: {fileID: 0}
+      _animationObject: {fileID: 0}
+    PagePopExitTransition:
+      _assetType: 0
+      _animationBehaviour: {fileID: 0}
+      _animationObject: {fileID: 0}

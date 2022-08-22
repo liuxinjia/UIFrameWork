@@ -13,5 +13,5 @@ public class DemoPageView : UIPageView
 public static partial class UINodes
 {
     //Replace With Pool
-    public static readonly UINode DemoPage = new UINode("Assets/Resoures/DemoPage");
+    public static readonly UINode DemoPage = new UINode("DemoPage");
 }

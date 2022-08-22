@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Page
+  m_EditorClassIdentifier: 
+  m_GroupName: Page
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 776514991197ad24fb9bca88b71b4df7
+  m_SerializeEntries:
+  - m_GUID: 500da42f59d15ea46a0ef80d7e6e007b
+    m_Address: MainMenu_VideoSetting_Popup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 17abfc048ffe6054a882150b85f49c9a
+    m_Address: MainMenu_AudioSetting_Popup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 70eee29052620bf4eb4463e75ebcc705
+    m_Address: MainMenu_Setting_Popup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e78a78c4db3fb614d99742a34b4e7153
+    m_Address: MainMenu_Window_Popup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36a2c79ee4fd64849a035d43622a9626
+    m_Address: MainMenu_GamePlaySetting_Popup
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f100c7ce22c4e948bfd0a94045d8b9f
+    m_Address: MainMenuPage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4ad34963d9d50d449b5c99887f3f11b2
+    m_Address: LoadingPage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 321afa2ed789e1c44949b9deb11043d9, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 67dc727314ceeb94da88cc94b1b1a95a, type: 2}
+    - {fileID: 11400000, guid: de0634efa215ab24a9b34b1a0c0ab9f4, type: 2}

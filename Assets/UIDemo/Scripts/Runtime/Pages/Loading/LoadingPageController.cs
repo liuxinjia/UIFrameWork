@@ -8,6 +8,6 @@ public class LoadingPageController : UIPageController
     public override IEnumerator OnShowAsync()
     {
         yield return new WaitForSeconds(2f);
-        UIManager.Instance.Show(UINodes.DemoPage);
+        // UIManager.Instance.Show(UINodes.DemoPage);
     }
 }
