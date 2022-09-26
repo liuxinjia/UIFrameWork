@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using Cr7Sund.AssetLoader;
 using Cr7Sund.MyCoroutine;
 using Cr7Sund.Runtime.Util;
@@ -97,11 +96,15 @@ namespace Cr7Sund.UIFrameWork
 
         public AsyncProcessHandle Show(UINode enterPage, bool playAnimation = true, bool keepInStack = true, bool loadAsync = true, bool closeAllPopup = false)
         {
+            
             if (closeAllPopup)
             {
                 return _popupContainers.CloseAll((handle) =>
                         {
-                            if (!handle.HasError) _pageContainers.Show(enterPage, playAnimation, keepInStack, loadAsync);
+                            if (!handle.HasError)
+                            {
+                                _pageContainers.Show(enterPage, false, keepInStack, loadAsync);
+                            }
                         });
             }
             else

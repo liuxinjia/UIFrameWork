@@ -61,7 +61,7 @@ namespace Cr7Sund.UIFrameWork
             var enterPageKey = enterPage.resourceKey;
 
             //PLAN replace with Assert
-            if (string.IsNullOrEmpty(enterPage.resourceKey))
+            if (string.IsNullOrEmpty(enterPageKey))
             {
                 throw new ArgumentNullException(nameof(enterPage));
             }
@@ -94,7 +94,7 @@ namespace Cr7Sund.UIFrameWork
 
             // Setup -- PrefabLoad
             /// --------------------- ---------------------
-            if (!_assetLoadHandles.TryGetValue(enterPage.resourceKey, out var assetLoadHandle))
+            if (!_assetLoadHandles.TryGetValue(enterPageKey, out var assetLoadHandle))
             {
                 // Why we do not cache load result?
                 // 1. we destory page only when 1. we open with new page but no stack; 2.pop back will destory exit page 
@@ -102,8 +102,8 @@ namespace Cr7Sund.UIFrameWork
                 // Why we do need assetLoad cache?
                 // 1. When we pop back , page will be destory
                 assetLoadHandle = loadAsync
-                  ? AssetLoader.LoadAsync<GameObject>(enterPage.resourceKey)
-                  : AssetLoader.Load<GameObject>(enterPage.resourceKey);
+                  ? AssetLoader.LoadAsync<GameObject>(enterPageKey)
+                  : AssetLoader.Load<GameObject>(enterPageKey);
 
                 _assetLoadHandles.Add(enterPageKey, assetLoadHandle);
                 if (!assetLoadHandle.IsDone)
@@ -129,13 +129,13 @@ namespace Cr7Sund.UIFrameWork
 
             // Preprocess -- After load , before Animation
             /// --------------------- ---------------------
-            yield return enterPageCtrl.AfterLoadAsync();
-
+            enterPageCtrl.AfterLoad();
 
             // Play Animations
             /// --------------------- ---------------------
             if (exitPage != null) yield return exitPageCtrl.Exit(true, playAnimation, enterPage);
             yield return enterPageCtrl.Enter(true, playAnimation, exitPage);
+
 
             //End Transition
             IsInTransition = false;
@@ -145,7 +145,7 @@ namespace Cr7Sund.UIFrameWork
             {
                 var hashKey = exitPage.resourceKey;
                 var handle = _assetLoadHandles[hashKey];
-                
+
                 exitPage.Dispose();
                 _assetLoadHandles.Remove(hashKey);
                 AssetLoader.Release<GameObject>(handle);
@@ -182,7 +182,6 @@ namespace Cr7Sund.UIFrameWork
             /// --------------------- ---------------------
             yield return exitPageCtrl.Exit(true, playAnimation, exitPage);
             if (enterPage != null) yield return enterPageCtrl.Enter(true, playAnimation, exitPage);
-
             //End Transition
             IsInTransition = false;
 
@@ -203,9 +202,8 @@ namespace Cr7Sund.UIFrameWork
         {
             while (CurPage != null)
             {
-                yield return PopRoutine(false);
+                yield return PopRoutine(true);
             }
-            yield break;
         }
 
         #region  Public Methods
@@ -253,7 +251,7 @@ namespace Cr7Sund.UIFrameWork
 
         public AsyncProcessHandle CloseAll(Action<AsyncProcessHandle> onTerminate = null)
         {
-            return CoroutineManager.Instance.Run(CloseAllRoutine(), onTerminate );
+            return CoroutineManager.Instance.Run(CloseAllRoutine(), onTerminate);
         }
 
         #endregion

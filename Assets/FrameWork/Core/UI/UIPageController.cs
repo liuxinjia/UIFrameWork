@@ -63,7 +63,7 @@ namespace Cr7Sund.UIFrameWork
         #endregion
 
         #region LifeCycles
-        public AsyncProcessHandle AfterLoadAsync()
+        public void AfterLoad()
         {
             _rectTransform = (RectTransform)pageView.transform;
             _canvasGroup = _gameObject.GetOrAddComponent<CanvasGroup>();
@@ -87,7 +87,6 @@ namespace Cr7Sund.UIFrameWork
 
             _canvasGroup.alpha = 0.0f;
 
-            return CoroutineManager.Instance.Run(CreateCoroutine(OnShowAsync()));
         }
 
 
@@ -142,6 +141,7 @@ namespace Cr7Sund.UIFrameWork
             }
 
             _canvasGroup.alpha = 0.0f;
+
             OnHide();
             yield break;
         }
@@ -168,8 +168,10 @@ namespace Cr7Sund.UIFrameWork
             }
 
             _rectTransform.FillParent(_parentTransform);
+
             OnShow();
-            yield break;
+            yield return CoroutineManager.Instance.Run(CreateCoroutine(OnShowAsync()));
+
         }
 
         #endregion
@@ -177,7 +179,6 @@ namespace Cr7Sund.UIFrameWork
         #region OverideMethods
         public virtual IEnumerator OnShowAsync()
         {
-
             yield break;
         }
         public virtual void OnShow() { }
