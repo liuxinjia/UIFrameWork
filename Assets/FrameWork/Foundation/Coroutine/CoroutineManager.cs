@@ -18,6 +18,29 @@ namespace Cr7Sund.MyCoroutine
             new ObjectPool<AsyncProcessHandle>(() => new AsyncProcessHandle());// Since AsyncProcessHandle only appear here
         public bool ThrowException { get; set; } = true;
 
+        void SendEditorCommand(string cmd)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorWindow w = UnityEditor.EditorWindow.GetWindow<UnityEditor.EditorWindow>("CoTrackerWindow");
+            if (w.GetType().Name == "CoTrackerWindow")
+            {
+                w.SendEvent(UnityEditor.EditorGUIUtility.CommandEvent(cmd));
+            }
+#endif
+        }
+
+        protected override void SingletonStarted()
+        {
+            CoroutineRuntimeTrackingConfig.EnableTracking = true;
+            StartCoroutine(RuntimeCoroutineStats.Instance.BroadcastCoroutine());
+
+            SendEditorCommand("AppStarted");
+        }
+        protected override void SingletonDestroyed()
+        {
+            SendEditorCommand("AppDestroyed");
+        }
+
 
         public AsyncProcessHandle Run(IEnumerator routine, Action<AsyncProcessHandle> onTerminate = null)
         {
@@ -33,7 +56,7 @@ namespace Cr7Sund.MyCoroutine
                 handle.OnTerminate += () => onTerminate(handle);
             }
 
-            var coroutine = StartCoroutine(ProcessRoutines(routine, id, handleSetter));
+            var coroutine = RuntimeCoroutineTracker.InvokeStart(this,ProcessRoutines(routine, id, handleSetter));
             _runningCoroutines.Add(id, coroutine);
             return handle;
         }

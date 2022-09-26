@@ -12,7 +12,7 @@ namespace Cr7Sund.Transition.UI
     public class AnimatorTransitionBehaviour : TransitionBehaviour
     {
 
-        [SerializeField] private Animator _animation;
+        [SerializeField] private Animator _animator;
 
         public override float Duration => _timeLength;
 
@@ -24,27 +24,31 @@ namespace Cr7Sund.Transition.UI
         protected override void Setup()
         {
             _openParameterId = Animator.StringToHash(OpenTransitionName);
+            _timeLength = _animator.GetCurrentAnimatorStateInfo(0).length + _animator.GetAnimatorTransitionInfo(0).duration/2;
         }
 
         public override void Play(bool enter)
         {
-            if (_animation != null)
-                _animation.SetBool(_openParameterId, enter);
+            // if (_animator != null) //TRy This 
+            {
+                _animator.SetBool(_openParameterId, enter);
+
+                _timeLength = _animator.GetCurrentAnimatorStateInfo(0).length + _animator.GetAnimatorTransitionInfo(0).duration/2;
+                Debug.Log(_timeLength);
+            }
         }
 
         public override void Stop()
         {
-            throw new NotImplementedException("Aniamtion can not stop");
         }
 
         public override void Resume(float time)
         {
-           throw new NotImplementedException("Aniamtion can not resume");
         }
 
         public override void Reset()
         {
-          
+
         }
 
 
