@@ -9,6 +9,9 @@ namespace Cr7Sund.AssetLoader
 
         public AssetManager()
         {
+#if UNITY_EDITOR
+            AssetLoader = new AddressableAssetLoader();
+#endif
 
 
         }

@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Editor/Page/PageEditor.uss?fileID=7433441132597879392&amp;guid=d0ea20bb4b88e2e478d81dd61f1e03bd&amp;type=3#PageEditor" />
+    <ui:VisualElement name="root" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); border-left-color: rgba(53, 211, 248, 0.47); border-right-color: rgba(53, 211, 248, 0.47); border-top-color: rgba(53, 211, 248, 0.47); border-bottom-color: rgba(53, 211, 248, 0.47); border-left-width: 6px; border-right-width: 6px; border-top-width: 6px; border-bottom-width: 6px; border-top-left-radius: 28px; border-bottom-left-radius: 28px; border-top-right-radius: 28px; border-bottom-right-radius: 28px;">
+        <ui:Label text="Hello World! With Style" name="title" class="custom-label" style="transform-origin: left top; -unity-text-align: middle-center; align-items: auto; flex-grow: 1;" />
+        <ui:VisualElement name="TopContainer" style="flex-grow: 2; background-color: rgba(0, 0, 0, 0); flex-shrink: 3; height: 84px; width: 493px; align-items: center; justify-content: space-between; align-self: center;">
+            <ui:Button text="DropArea" display-tooltip-when-elided="true" name="DropArea" style="flex-grow: 1; -unity-text-align: middle-center; align-items: auto; align-self: center; justify-content: flex-end; width: 556px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="CenterContainer" style="flex-grow: 2; background-color: rgba(0, 0, 0, 0);">
+            <ui:ScrollView name="scrollView" />
+        </ui:VisualElement>
+        <ui:VisualElement name="BottomContainer" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+            <ui:Button text="Generate" display-tooltip-when-elided="true" name="GenBtn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
