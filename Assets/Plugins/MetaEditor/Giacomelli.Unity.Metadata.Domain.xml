@@ -1,0 +1,345 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Giacomelli.Unity.Metadata.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IAssemblyLoader">
+            <summary>
+            Define an interface for an assembly loader.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IAssemblyLoader.LoadFrom(System.String)">
+            <summary>
+            Loads the assembly from the specified path.
+            </summary>
+            <returns>The assembly.</returns>
+            <param name="path">The assembly path.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IAssetRepository">
+            <summary>
+            Defines an interface for asset repository.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IAssetRepository.GetGameObject(System.String)">
+            <summary>
+            Gets a game object in the specified path.
+            </summary>
+            <returns>The game object.</returns>
+            <param name="path">The asset path.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IGameObject">
+            <summary>
+            Defines an interface for a game object.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IGameObject.HasComponent(System.Type)">
+            <summary>
+            Verify if the game object has a component of the specified type.
+            </summary>
+            <returns><c>true</c>, if component was hased, <c>false</c> otherwise.</returns>
+            <param name="type">Type.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IGameObject.GetMaterials">
+            <summary>
+            Gets the materials.
+            </summary>
+            <returns>The materials.</returns>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IMaterial">
+            <summary>
+            Defines an interface for a material.
+            </summary>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.IMaterial.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataService">
+            <summary>
+            Defines an interface for a prefab metadata service.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataService.GetPrefabs(System.String)">
+            <summary>
+            Gets the prefabs.
+            </summary>
+            <returns>The prefabs.</returns>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataService.FixMissingMonobehaviours(Giacomelli.Unity.Metadata.Domain.PrefabMetadata,System.Collections.Generic.IEnumerable{Giacomelli.Unity.Metadata.Domain.MonoBehaviourMetadata})">
+            <summary>
+            Fix the missing MonoBehaviours.
+            </summary>
+            <param name="prefab">Prefab.</param>
+            <param name="missingMonoBehaviours">Missing mono behaviours.</param>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataService.Writer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataWriter">
+            <summary>
+            Defines an interface for a [refab metadata writer.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataWriter.ReplaceGuid(Giacomelli.Unity.Metadata.Domain.ScriptMetadata,System.String,System.String)">
+            <summary>
+            Replaces the GUID.
+            </summary>
+            <param name="oldScript">Old script.</param>
+            <param name="newGuid">New GUID.</param>
+            <param name="fileName">File name.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IScriptMetadataService">
+            <summary>
+            Defines an interface for a script metadata service.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IScriptMetadataService.GetScripts">
+            <summary>
+            Gets the scripts.
+            </summary>
+            <returns>The scripts.</returns>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IScriptMetadataService.GetFullNameByFileId(System.Int64)">
+            <summary>
+            Gets the full name by file identifier.
+            </summary>
+            <returns>The full name by file identifier.</returns>
+            <param name="fileId">File identifier.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.ITypeService">
+            <summary>
+            Defines an interface for a type service.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.ITypeService.GetTypes">
+            <summary>
+            Gets the types.
+            </summary>
+            <returns>The types.</returns>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.ITypeService.GetTypeByName(System.String)">
+            <summary>
+            Gets a type by the name.
+            </summary>
+            <returns>The type.</returns>
+            <param name="typeName">Type name.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.ITypeService.GetGuid(System.Type)">
+            <summary>
+            Gets the GUID.
+            </summary>
+            <returns>The GUID.</returns>
+            <param name="type">Type.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.PrefabMetadataService">
+            <summary>
+            Prefab metadata service.
+            </summary>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.PrefabMetadataService.Writer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.PrefabMetadataService.#ctor(Giacomelli.Unity.Metadata.Domain.IPrefabMetadataReader,Giacomelli.Unity.Metadata.Domain.IPrefabMetadataWriter,Giacomelli.Unity.Metadata.Infrastructure.Framework.IO.IFileSystem,Giacomelli.Unity.Metadata.Domain.ITypeService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Giacomelli.Unity.Metadata.Domain.PrefabMetadataService"/> class.
+            </summary>
+            <param name="prefabMetadataReader">Prefab metadata reader.</param>
+            <param name="prefabMetadataWriter">Prefab metadata writer.</param>
+            <param name="fileSystem">File system.</param>
+            <param name="typeService">Type service.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.PrefabMetadataService.GetPrefabs(System.String)">
+            <summary>
+            Gets the prefabs.
+            </summary>
+            <returns>The prefabs.</returns>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.PrefabMetadataService.FixMissingMonobehaviours(Giacomelli.Unity.Metadata.Domain.PrefabMetadata,System.Collections.Generic.IEnumerable{Giacomelli.Unity.Metadata.Domain.MonoBehaviourMetadata})">
+            <summary>
+            Fixs the missing monobehaviours.
+            </summary>
+            <param name="prefab">Prefab.</param>
+            <param name="missingMonoBehaviours">Missing mono behaviours.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.MonoBehaviourMetadata">
+            <summary>
+            Mono behaviour metadata.
+            </summary>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.MonoBehaviourMetadata.Script">
+            <summary>
+            Gets or sets the script.
+            </summary>
+            <value>The script.</value>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.PrefabMetadata">
+            <summary>
+            Prefab metadata.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Giacomelli.Unity.Metadata.Domain.PrefabMetadata"/> class.
+            </summary>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.Path">
+            <summary>
+            Gets or sets the path.
+            </summary>
+            <value>The path.</value>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.MonoBehaviours">
+            <summary>
+            Gets the mono behaviours.
+            </summary>
+            <value>The mono behaviours.</value>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.Materials">
+            <summary>
+            Gets the materials.
+            </summary>
+            <value>The materials.</value>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.GetScriptByFileId(System.Int32)">
+            <summary>
+            Gets the script by file identifier.
+            </summary>
+            <returns>The script by file identifier.</returns>
+            <param name="fileId">File identifier.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.GetMissingMonoBehaviours(Giacomelli.Unity.Metadata.Domain.IAssetRepository,Giacomelli.Unity.Metadata.Domain.ITypeService)">
+            <summary>
+            Gets the missing mono behaviours.
+            </summary>
+            <returns>The missing mono behaviours.</returns>
+            <param name="assetRepository">Asset repository.</param>
+            <param name="typeService">Type service.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.PrefabMetadata.GetMissingMaterials(Giacomelli.Unity.Metadata.Domain.IAssetRepository)">
+            <summary>
+            Gets the missing materials.
+            </summary>
+            <returns>The missing materials.</returns>
+            <param name="assetRepository">Asset repository.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.ScriptMetadata">
+            <summary>
+            Script metadata.
+            </summary>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataReader">
+            <summary>
+            Defines an interface for a prefab metadata reader.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.IPrefabMetadataReader.Read(System.String)">
+            <summary>
+            Reads the prefab metadata form the specified file.
+            </summary>
+            <param name="fileName">The file name.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.MaterialMetadata">
+            <summary>
+            Material metadata.
+            </summary>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.FileMetadataBase">
+            <summary>
+            Base class for file metadata.
+            </summary>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.FileMetadataBase.FileId">
+            <summary>
+            Gets or sets the file identifier.
+            </summary>
+            <value>The file identifier.</value>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.FileMetadataBase.FullName">
+            <summary>
+            Gets or sets the full name.
+            </summary>
+            <value>The full name.</value>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.FileMetadataBase.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Giacomelli.Unity.Metadata.Domain.FileMetadataBase.Guid">
+            <summary>
+            Gets or sets the GUID.
+            </summary>
+            <value>The GUID.</value>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.ScriptMetadataService">
+            <summary>
+            Script metadata service.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.ScriptMetadataService.#ctor(Giacomelli.Unity.Metadata.Domain.ITypeService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Giacomelli.Unity.Metadata.Domain.ScriptMetadataService"/> class.
+            </summary>
+            <param name="typeService">Type service.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.ScriptMetadataService.GetScripts">
+            <summary>
+            Gets the scripts.
+            </summary>
+            <returns>The scripts.</returns>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.ScriptMetadataService.GetFullNameByFileId(System.Int64)">
+            <summary>
+            Gets the full name by file identifier.
+            </summary>
+            <returns>The full name by file identifier.</returns>
+            <param name="fileId">File identifier.</param>
+        </member>
+        <member name="T:Giacomelli.Unity.Metadata.Domain.TypeService">
+            <summary>
+            Type service.
+            </summary>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.TypeService.#ctor(Giacomelli.Unity.Metadata.Infrastructure.Framework.IO.IFileSystem,Giacomelli.Unity.Metadata.Domain.IAssemblyLoader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Giacomelli.Unity.Metadata.Domain.TypeService"/> class.
+            </summary>
+            <param name="fileSystem">File system.</param>
+            <param name="assemblyLoader">Assembly loader.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.TypeService.GetTypes">
+            <summary>
+            Gets the types.
+            </summary>
+            <returns>The types.</returns>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.TypeService.GetTypeByName(System.String)">
+            <summary>
+            Gets a type by the name.
+            </summary>
+            <returns>The type.</returns>
+            <param name="typeName">Type name.</param>
+        </member>
+        <member name="M:Giacomelli.Unity.Metadata.Domain.TypeService.GetGuid(System.Type)">
+            <summary>
+            Gets the GUID.
+            </summary>
+            <returns>The GUID.</returns>
+            <param name="type">Type.</param>
+        </member>
+    </members>
+</doc>
