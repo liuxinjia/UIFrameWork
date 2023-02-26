@@ -1,4 +1,4 @@
-repository "UIFrameWork@ssl://liux4989@sh03-plasticscm.unity.cn:8787"
+repository "UIFrameWork@Cr7Sund@cloud"
   path "/"
     br "/main"
     co "/main"

@@ -17,7 +17,6 @@ public class MainMenuWindowPopupView : UIPageView
     public Button startGameBtn;
 
     private void AddListeners(){
-        startGameBtn.onClick += 
     }
 
     public void OnStartGameEvent(){

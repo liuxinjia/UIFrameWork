@@ -22,7 +22,7 @@ namespace Cr7Sund.UIFrameWork
 
         public bool IsInTransition { get; private set; }
 
-        public Canvas ParentCanvas;
+        public Canvas RootCanvas;
         private IAssetLoader AssetLoader => AssetManager.Instance;
 
 
@@ -31,6 +31,7 @@ namespace Cr7Sund.UIFrameWork
         {
             if (string.IsNullOrEmpty(preloadPage.resourceKey))
             {
+                // PLAN replace with Log4Net<UIMgr>
                 throw new ArgumentNullException(nameof(preloadPage));
             }
 
@@ -43,6 +44,7 @@ namespace Cr7Sund.UIFrameWork
             var assetLoadHandle = AssetLoader.LoadAsync<GameObject>(preloadPage.resourceKey);
             _assetLoadHandles.Add(preloadPageKey, assetLoadHandle);
 
+            // PLAN replace with Dictionary + Queue
             if (!assetLoadHandle.IsDone)
             {
                 yield return new WaitUntil(() => assetLoadHandle.IsDone);
@@ -91,7 +93,6 @@ namespace Cr7Sund.UIFrameWork
             IsInTransition = true;
 
 
-
             // Setup -- PrefabLoad
             /// --------------------- ---------------------
             if (!_assetLoadHandles.TryGetValue(enterPageKey, out var assetLoadHandle))
@@ -117,7 +118,7 @@ namespace Cr7Sund.UIFrameWork
             }
 
             var instance = GameObject.Instantiate(assetLoadHandle.Result);
-            instance.transform.SetParent(ParentCanvas.transform);
+            instance.transform.SetParent(RootCanvas.transform);
             var enterPageView = instance.GetComponent<UIPageView>();
             var enterPageCtrl = enterPageView.Bind();
             enterPageCtrl.pageView = enterPageView;

@@ -57,8 +57,8 @@ namespace Cr7Sund.UIFrameWork
         {
             _pageContainers = new PageContainer();
             _popupContainers = new PageContainer();
-            _pageContainers.ParentCanvas = DefaultCanvas;
-            _popupContainers.ParentCanvas = PopupCanvas;
+            _pageContainers.RootCanvas = DefaultCanvas;
+            _popupContainers.RootCanvas = PopupCanvas;
         }
 
         #region Popup
