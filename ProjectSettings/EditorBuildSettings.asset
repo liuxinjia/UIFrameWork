@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/CmpPrefab.unity
-    guid: 36fb99aa89e46de4eabdeca148223a6c
+    path: Assets/Sample/UIDemo/Scenes/UI.unity
+    guid: a96920a44acbca9489ff268eab457840
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 613e5b8c2480f784cbb2829b5b734e84, type: 2}
