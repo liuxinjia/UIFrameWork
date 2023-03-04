@@ -2,32 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
+using Cr7Sund.Assertions;
 using Cr7Sund.Pool;
 using Cr7Sund.Runtime.Util;
 
 namespace Cr7Sund.MyCoroutine
 {
-    public class CoroutineManager : MonoBehaviourSingleton<CoroutineManager>
+    public class CoroutineManager : MonoBehaviourSingleton<CoroutineManager>, ICoroutineManager
     {
 
         private int _currentId;
         private readonly Dictionary<int, Coroutine> _runningCoroutines =
             new Dictionary<int, Coroutine>();
         private readonly IObjectPool<AsyncProcessHandle> _pool =
-            new ObjectPool<AsyncProcessHandle>(() => new AsyncProcessHandle());// Since AsyncProcessHandle only appear here
+            new ObjectPool<AsyncProcessHandle>(AsyncProcessHandle.Create);// Since AsyncProcessHandle only appear here
         public bool ThrowException { get; set; } = true;
 
-        void SendEditorCommand(string cmd)
-        {
-#if UNITY_EDITOR
-            UnityEditor.EditorWindow w = UnityEditor.EditorWindow.GetWindow<UnityEditor.EditorWindow>("CoTrackerWindow");
-            if (w.GetType().Name == "CoTrackerWindow")
-            {
-                w.SendEvent(UnityEditor.EditorGUIUtility.CommandEvent(cmd));
-            }
-#endif
-        }
+
+
+        #region LifeTime
 
         protected override void SingletonStarted()
         {
@@ -41,34 +34,50 @@ namespace Cr7Sund.MyCoroutine
             SendEditorCommand("AppDestroyed");
         }
 
+        #endregion
 
-        public AsyncProcessHandle Run(IEnumerator routine, Action<AsyncProcessHandle> onTerminate = null)
+        #region API
+
+        public AsyncProcessHandle Run(IEnumerator routine)
         {
             Assert.IsNotNull<IEnumerator>(routine);
 
             var id = _currentId++;
             var handle = _pool.Get();
             var handleSetter = (IAsyncProcessHandleSetter)handle;
-            handle.Init();
-            handle.Id = id;
-            if (onTerminate != null)
-            {
-                handle.OnTerminate += () => onTerminate(handle);
-            }
+            handle.Init(id);
 
-            var coroutine = RuntimeCoroutineTracker.InvokeStart(this,ProcessRoutines(routine, id, handleSetter));
+
+            Coroutine coroutine = StartCoroutineInternal(routine, handleSetter, ThrowException);
             _runningCoroutines.Add(id, coroutine);
             return handle;
         }
         public void Stop(AsyncProcessHandle handle)
         {
-            var coroutine = _runningCoroutines[handle.Id];
-            StopCoroutine(coroutine);
-            OnTerminate(handle);
+
+            if (_runningCoroutines.TryGetValue(handle.Id, out var coroutine))
+            {
+                StopCoroutine(coroutine);
+                OnTerminate(handle);
+            }
         }
 
 
-        private IEnumerator ProcessRoutines(IEnumerator routine, int id, IAsyncProcessHandleSetter handleSetter, bool throwException = true)
+
+        #endregion
+
+        private UnityEngine.Coroutine StartCoroutineInternal(IEnumerator routine, IAsyncProcessHandleSetter handleSetter, bool throwException = true)
+        {
+#if UNITY_EDITOR
+            return RuntimeCoroutineTracker.InvokeStart(this, ProcessRoutines(routine, handleSetter, throwException));
+
+#else
+            return StartCoroutine(ProcessRoutines(routine,handleSetter, throwException));
+#endif
+
+        }
+
+        private IEnumerator ProcessRoutines(IEnumerator routine, IAsyncProcessHandleSetter handleSetter, bool throwException = true)
         {
             object current = null;
             while (true)// Avoid first routine.MoveNext Exception
@@ -93,17 +102,16 @@ namespace Cr7Sund.MyCoroutine
                     ex = e;
                     OnError(ex, handleSetter);
                     OnTerminate(handleSetter);
+
                     if (throwException)
                     {
-
                         throw new System.Exception(ex + ", " + ex.StackTrace);
                     }
                 }
 
                 if (ex != null)
                 {
-                    yield return ex;
-                    yield break; // Equal to return;
+                    yield return ex; //equal to yield break, equal to return
                 }
 
                 yield return current; // if null equal to waif for seconds (0)
@@ -113,6 +121,7 @@ namespace Cr7Sund.MyCoroutine
             OnTerminate(handleSetter);
         }
 
+        #region callbacks
 
         private void OnComplete(object result, IAsyncProcessHandleSetter handleSetter)
         {
@@ -129,11 +138,26 @@ namespace Cr7Sund.MyCoroutine
             if (handleSetter is AsyncProcessHandle handle)
             {
                 _runningCoroutines.Remove(handle.Id);
-                handle.Releasae();
+                handle.Release();
                 _pool.Release(handle);
             }
         }
 
+        #endregion
 
+        private void SendEditorCommand(string cmd)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorWindow w = UnityEditor.EditorWindow.GetWindow<UnityEditor.EditorWindow>("CoTrackerWindow");
+            if (w == null)
+            {
+                w = UnityEditor.EditorWindow.CreateWindow<UnityEditor.EditorWindow>("CoTrackerWindow");
+            }
+            if (w.GetType().Name == "CoTrackerWindow")
+            {
+                w.SendEvent(UnityEditor.EditorGUIUtility.CommandEvent(cmd));
+            }
+#endif
+        }
     }
 }
