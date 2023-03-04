@@ -41,5 +41,11 @@ namespace Cr7Sund.Assertions
         {
             return GetMessage("Value was " + !expected, expected.ToString());
         }
+
+
+        public static string NotFoundMessage<TKey>(TKey expected)
+        {
+            return GetMessage(UnityString.Format("Not Found Key {0} ", expected, expected.ToString()));
+        }
     }
 }

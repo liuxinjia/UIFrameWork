@@ -72,5 +72,18 @@ namespace Cr7Sund.Assertions
             if (actual == expected)
                 Fail(AssertionMessageUtil.GetEqualityMessage(actual, expected, false), message);
         }
+
+        [Conditional("UNITY_ASSERTIONS")]
+        public static void Contains<T>(ICollection<T> collection, T expected)
+        {
+            Assert.IsTrue(collection.Contains(expected));
+        }
+
+        [Conditional("UNITY_ASSERTIONS")]
+        public static void Contains<TKey, TValue>(IDictionary<TKey, TValue> collection, TKey expected, string message = null)
+        {
+            if (!collection.ContainsKey(expected))
+                Fail(AssertionMessageUtil.NotFoundMessage(expected), message);
+        }
     }
 }
