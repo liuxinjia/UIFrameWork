@@ -52,14 +52,21 @@ namespace Cr7Sund.MyCoroutine
             _runningCoroutines.Add(id, coroutine);
             return handle;
         }
+
         public void Stop(AsyncProcessHandle handle)
         {
-
+            Assert.Contains<int, Coroutine>(_runningCoroutines, handle.Id);
             if (_runningCoroutines.TryGetValue(handle.Id, out var coroutine))
             {
                 StopCoroutine(coroutine);
                 OnTerminate(handle);
             }
+        }
+
+        public new void StopAllCoroutines()
+        {
+            _runningCoroutines.Clear();
+            ((MonoBehaviour)this).StopAllCoroutines();
         }
 
 

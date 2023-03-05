@@ -4,7 +4,7 @@ namespace Cr7Sund.UIFrameWork
 {
     internal interface IUIManager
     {
-        AsyncProcessHandle Show(UINode enterPage, bool playAnimation = true, bool keepInStack = true, bool loadAsync = true, bool closeAllPopup = false);
+        AsyncProcessHandle Show(UINode enterPage, bool playAnimation = true, bool keepInStack = true, bool loadAsync = true);
 
         AsyncProcessHandle Back(bool playAnimation = true);
 

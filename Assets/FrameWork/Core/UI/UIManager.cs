@@ -94,23 +94,9 @@ namespace Cr7Sund.UIFrameWork
 
 
 
-        public AsyncProcessHandle Show(UINode enterPage, bool playAnimation = true, bool keepInStack = true, bool loadAsync = true, bool closeAllPopup = false)
+        public AsyncProcessHandle Show(UINode enterPage, bool playAnimation = true, bool keepInStack = true, bool loadAsync = true)
         {
-            
-            if (closeAllPopup)
-            {
-                return _popupContainers.CloseAll((handle) =>
-                        {
-                            if (!handle.HasError)
-                            {
-                                _pageContainers.Show(enterPage, false, keepInStack, loadAsync);
-                            }
-                        });
-            }
-            else
-            {
-                return _pageContainers.Show(enterPage, playAnimation, keepInStack, loadAsync);
-            }
+            return _pageContainers.Show(enterPage, playAnimation, keepInStack, loadAsync);
         }
 
         #endregion

@@ -26,7 +26,7 @@ public class MainMenuWindowPopupController : UIPageController
 
     private void StartGame()
     {
-        UIManager.Instance.Show(UINodes.LoadingPage, true, false, true, true);
+        UIManager.Instance.Show(UINodes.LoadingPage, true, false, true);
     }
 }
 

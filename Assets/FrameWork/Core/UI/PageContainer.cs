@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cr7Sund.AssetLoader;
 using Cr7Sund.MyCoroutine;
 using UnityEngine;
-using UnityEngine.Assertions;
+using Cr7Sund.Assertions;
 using Cr7Sund.Settings;
 
 namespace Cr7Sund.UIFrameWork
@@ -250,9 +250,9 @@ namespace Cr7Sund.UIFrameWork
 
 
 
-        public AsyncProcessHandle CloseAll(Action<AsyncProcessHandle> onTerminate = null)
+        public AsyncProcessHandle CloseAll()
         {
-            return CoroutineManager.Instance.Run(CloseAllRoutine(), onTerminate);
+            return CoroutineManager.Instance.Run(CloseAllRoutine());
         }
 
         #endregion

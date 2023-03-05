@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class FooItem
 {
