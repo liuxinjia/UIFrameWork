@@ -62,19 +62,13 @@ namespace Cr7Sund.UIFrameWork
             var exitPageCtrl = exitPage?.pageController;
             var enterPageKey = enterPage.resourceKey;
 
-            //PLAN replace with Assert
-            if (string.IsNullOrEmpty(enterPageKey))
-            {
-                throw new ArgumentNullException(nameof(enterPage));
-            }
-
-            if (exitPage != null && exitPage.Level == enterPage.Level)
-            {
-                throw new Exception($"Maybe show the current page {exitPage.resourceKey}");
-            }
+            Assert.IsNotNullOrEmpty(enterPageKey);
+            Assert.IsNotNull(exitPage);
+            Assert.AreEqual(exitPage.Level, enterPage.Level, $"Maybe show the current page {exitPage.resourceKey} ");
+            Assert.IsFalse(IsInTransition, "Cannot transition because the screen is already in transition.");
 
             //Jump back to top layers if open tree layers >=2
-            if (enterPage.Level != 0 && exitPage != null)
+            if (enterPage.Level != 0)
             {
                 while (exitPage != null && exitPage.Level < enterPage.Level)
                 {
@@ -82,14 +76,7 @@ namespace Cr7Sund.UIFrameWork
                     yield return PopRoutine(false);
                 }
             }
-
-            if (IsInTransition)
-            {
-                throw new InvalidOperationException(
-                    "Cannot transition because the screen is already in transition.");
-            }
-
-
+ 
             IsInTransition = true;
 
 

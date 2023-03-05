@@ -22,7 +22,7 @@ public class CoroutineRuntimeTrackingConfig
 
 public class CoroutineNameCache
 {
-    public static string Mangle(string rawName)
+    public static string                               Mangle(string rawName)
     {
         string mangled;
         if (_mangledNames.TryGetValue(rawName, out mangled))

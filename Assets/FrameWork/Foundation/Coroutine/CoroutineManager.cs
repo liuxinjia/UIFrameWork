@@ -24,8 +24,8 @@ namespace Cr7Sund.MyCoroutine
 
         protected override void SingletonStarted()
         {
-            CoroutineRuntimeTrackingConfig.EnableTracking = true;
-            StartCoroutine(RuntimeCoroutineStats.Instance.BroadcastCoroutine());
+            // CoroutineRuntimeTrackingConfig.EnableTracking = true;
+            // StartCoroutine(RuntimeCoroutineStats.Instance.BroadcastCoroutine());
 
             SendEditorCommand("AppStarted");
         }
@@ -75,12 +75,12 @@ namespace Cr7Sund.MyCoroutine
 
         private UnityEngine.Coroutine StartCoroutineInternal(IEnumerator routine, IAsyncProcessHandleSetter handleSetter, bool throwException = true)
         {
-#if UNITY_EDITOR
-            return RuntimeCoroutineTracker.InvokeStart(this, ProcessRoutines(routine, handleSetter, throwException));
+// #if UNITY_EDITOR
+//             return RuntimeCoroutineTracker.InvokeStart(this, ProcessRoutines(routine, handleSetter, throwException));
 
-#else
+// #else
             return StartCoroutine(ProcessRoutines(routine,handleSetter, throwException));
-#endif
+// #endif
 
         }
 

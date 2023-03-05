@@ -4,8 +4,9 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Cr7Sund.FrameWork",
-        "Unity.PerformanceTesting"
+        "Unity.PerformanceTesting",
+        "Cr7Sund.Foundation",
+        "Cr7Sund.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
